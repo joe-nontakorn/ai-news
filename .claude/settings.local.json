@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Invoke-RestMethod -Uri \"http://localhost:3000\")",
+      "PowerShell(Invoke-WebRequest -Uri \"http://localhost:3000\" | Select-Object -ExpandProperty Content)",
+      "PowerShell(New-Item *)"
+    ]
+  }
+}
