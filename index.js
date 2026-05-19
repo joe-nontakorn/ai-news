@@ -65,7 +65,8 @@ console.log('\n💡 Tip: ถ้าอยากทดสอบทันที ใ
 const PORT = process.env.PORT || 3000;
 http.createServer((req, res) => {
   res.writeHead(200, { "Content-Type": "application/json" });
-  res.end(JSON.stringify({ status: "ok", bot: "Daily Market Bot", uptime: Math.floor(process.uptime()) }));
+  const packageJson = require("./package.json");
+  res.end(JSON.stringify({ status: "ok", bot: "Daily Market Bot", version: packageJson.version, uptime: Math.floor(process.uptime()) }));
 }).listen(PORT, () => {
   console.log(`🌐 Health check server running on port ${PORT}`);
 });

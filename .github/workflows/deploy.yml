@@ -26,16 +26,22 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Get version from package.json
+        id: pkg_version
+        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+
       - name: Build & push image
         uses: docker/build-push-action@v6
         with:
           context: .
           push: true
-          tags: ${{ env.IMAGE }}:latest,${{ env.IMAGE }}:${{ github.sha }}
+          build-args: |
+            IMAGE_VERSION=${{ env.VERSION }}
+          tags: ${{ env.IMAGE }}:latest,${{ env.IMAGE }}:${{ env.VERSION }},${{ env.IMAGE }}:${{ github.sha }}
 
       - name: Deploy
         run: |
-          docker pull ${{ env.IMAGE }}:latest
+          docker pull ${{ env.IMAGE }}:${{ env.VERSION }}
           docker stop news-bot || true
           docker rm news-bot || true
           docker run -d \
@@ -43,5 +49,5 @@ jobs:
             --restart unless-stopped \
             --env-file /opt/news-bot/.env \
             -p 3000:3000 \
-            ${{ env.IMAGE }}:latest
+            ${{ env.IMAGE }}:${{ env.VERSION }}
           docker image prune -f
