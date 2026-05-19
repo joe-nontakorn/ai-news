@@ -3,7 +3,7 @@
  */
 async function fetchStockData() {
   const { default: YahooFinance } = await import("yahoo-finance2");
-  const yahooFinance = new YahooFinance();
+  const yahooFinance = new YahooFinance({ suppressNotices: ['yahooSurvey'] });
   const symbols = (process.env.STOCK_SYMBOLS || "NVDA,AAPL,TSLA,MSFT,GOOGL")
     .split(",")
     .map((s) => s.trim());
@@ -11,7 +11,7 @@ async function fetchStockData() {
   const results = [];
 
   for (const symbol of symbols) {
-    await new Promise((r) => setTimeout(r, 500));
+    await new Promise((r) => setTimeout(r, 2000));
     try {
       const quote = await yahooFinance.quote(symbol);
 
