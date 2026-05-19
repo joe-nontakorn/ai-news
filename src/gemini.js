@@ -1,7 +1,15 @@
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-
+ 
+// System prompt that instructs Gemini how to format the report
+const systemPrompt = `
+คุณเป็นผู้เชี่ยวชาญด้านการเงินและเทคโนโลยี มีภารกิจสรุปข่าวและหุ้นเป็นรายงานภาษาไทย
+- ใช้ Emoji แทนหัวข้อ
+- ไม่ใช้ Markdown headings
+- จัดเรียงข้อมูลให้ครบ 5 ส่วนตามโครงสร้างที่กำหนด
+- ให้คะแนนความเสี่ยง 1‑5 และแนะนำการลงทุนต่อจากข้อมูลข่าว
+`;
 /**
  * ใช้ Gemini วิเคราะห์ข่าวและหุ้น แล้วสรุปเป็นรายงานภาษาไทย
  */

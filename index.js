@@ -46,7 +46,7 @@ async function runDailyReport() {
 
 // ===== CRON JOB =====
 // ค่า default: 07:00 เช้า เวลาไทย = 00:00 UTC
-const schedule = process.env.CRON_SCHEDULE || "0 0 * * *";
+const schedule = process.env.CRON_SCHEDULE || "0 8,13 * * *";
 
 console.log("🤖 Daily Market Bot เริ่มทำงานแล้ว!");
 console.log(`⏰ ตั้งเวลาส่งรายงาน: ${schedule} (UTC)`);
