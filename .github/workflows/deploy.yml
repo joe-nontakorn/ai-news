@@ -28,7 +28,9 @@ jobs:
 
       - name: Get version from package.json
         id: pkg_version
-        run: echo "VERSION=$(node -p "require('./package.json').version")" >> $GITHUB_ENV
+        run: |
+          VERSION=$(grep '"version"' package.json | head -n 1 | awk -F '"' '{print $4}')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build & push image
         uses: docker/build-push-action@v6
