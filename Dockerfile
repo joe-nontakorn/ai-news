@@ -1,4 +1,7 @@
 FROM node:20-alpine
+ARG IMAGE_VERSION=1.0.0
+LABEL version="${IMAGE_VERSION}"
+
 
 WORKDIR /app
 
