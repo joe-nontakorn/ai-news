@@ -14,7 +14,7 @@ const systemPrompt = `
  * ใช้ Gemini วิเคราะห์ข่าวและหุ้น แล้วสรุปเป็นรายงานภาษาไทย
  */
 async function analyzeWithGemini(newsArticles, stockData) {
-  const model = genAI.getGenerativeModel({ model: "gemini-3.1-flash-lite-preview" });
+  const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
   // จัดกลุ่มข่าวตาม category เพื่อส่งให้ Gemini เห็นโครงสร้างชัดเจน
   const categories = [

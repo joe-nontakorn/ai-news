@@ -38,12 +38,12 @@ Copy `.env.example` to `.env` and fill in:
 | `DISCORD_WEBHOOK_URL` | Yes | Channel Settings → Integrations → Webhooks |
 | `NEWS_API_KEY` | Yes | From newsapi.org (free: 100 req/day) |
 | `STOCK_SYMBOLS` | No | Comma-separated Yahoo Finance tickers, default `NVDA,AAPL,TSLA,MSFT,GOOGL` |
-| `CRON_SCHEDULE` | No | UTC cron expression, default `0 0 * * *` (7:00 AM Bangkok) |
+| `CRON_SCHEDULE` | No | Local Bangkok cron expression, default `0 8,13 * * *` (8:00 AM & 1:00 PM Bangkok time) |
 | `TZ` | No | `Asia/Bangkok` |
 
 ## Key Implementation Details
 
-- **Cron timezone**: The cron job runs in UTC. 7:00 AM Bangkok (UTC+7) = `0 0 * * *` UTC.
+- **Cron timezone**: The cron job runs in the configured timezone, defaulting to `Asia/Bangkok` (Thailand Time), allowing you to schedule times directly in Bangkok time.
 - **Gemini model**: `gemini-2.0-flash` (hardcoded in `src/gemini.js:9`). Update here to switch models.
 - **Stock data**: Sequential per-symbol fetches (not parallel) inside `fetchStockData` — Yahoo Finance rate-limits concurrent requests.
 - **Discord chunking**: `splitText()` in `src/discord.js` splits on newlines to avoid cutting mid-sentence. Only the first chunk gets the embed fields (stock ticker summary); subsequent chunks are plain embeds.
