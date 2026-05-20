@@ -45,15 +45,16 @@ async function runDailyReport() {
 }
 
 // ===== CRON JOB =====
-// ค่า default: 07:00 เช้า เวลาไทย = 00:00 UTC
+// ค่า default: ส่ง 2 เวลา คือ 08:00 และ 13:00 เวลาไทย (Asia/Bangkok)
 const schedule = process.env.CRON_SCHEDULE || "0 8,13 * * *";
+const tz = process.env.TZ || "Asia/Bangkok";
 
 console.log("🤖 Daily Market Bot เริ่มทำงานแล้ว!");
-console.log(`⏰ ตั้งเวลาส่งรายงาน: ${schedule} (UTC)`);
+console.log(`⏰ ตั้งเวลาส่งรายงาน: ${schedule} (${tz})`);
 console.log("📌 หุ้นที่ติดตาม:", process.env.STOCK_SYMBOLS || "NVDA,AAPL,TSLA,MSFT,GOOGL");
 
 cron.schedule(schedule, runDailyReport, {
-  timezone: "UTC",
+  timezone: tz,
 });
 
 // ===== รันทดสอบทันทีตอนเริ่ม (comment ออกถ้าไม่ต้องการ) =====
